@@ -147,8 +147,8 @@ const StyledWrapper = styled.div`
 
   .loader-container {
     position: relative;
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1268,8 +1268,8 @@ const StyledWrapper = styled.div`
 
   .holo-numbers {
     position: absolute;
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     transform-style: preserve-3d;
     perspective: 1000px;
     pointer-events: none;

@@ -126,11 +126,11 @@ function SpinningGlobe({ auto = true }) {
       </mesh>
 
       {/* Wireframe mesh */}
-      <WireSphere />
+      <WireSphere radius={1.7} />
 
       {/* Stylized grid lines */}
-      <Rings />
-      <Meridians />
+      <Rings radius={1.701} />
+      <Meridians radius={1.701} />
     </group>
   )
 }
@@ -139,8 +139,8 @@ export default function Globe({
   interactive = false,
 }: { interactive?: boolean; height?: number }) {
   return (
-    <div>
-      <Canvas gl={{ antialias: true }} camera={{ position: [0, 0, 3] }}>
+    <div style={{ width: '350px', height: '350px' }}>
+      <Canvas gl={{ antialias: true }} camera={{ position: [0, 0, 5] }}>
         <ambientLight intensity={0.6} />
         <SpinningGlobe />
         {interactive ? <OrbitControls enableZoom={false} /> : null}

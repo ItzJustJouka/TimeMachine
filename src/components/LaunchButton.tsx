@@ -3,75 +3,73 @@ import styled from "styled-components";
 const LaunchButton = () => {
   return (
     <StyledWrapper>
-      <div>
-        <div className="nebula" />
-        <div className="grid-plane" />
-        <div className="stars-container">
-          <div className="star-layer" />
-          <div className="star-layer" />
-          <div className="star-layer" />
-        </div>
-        <div className="button-wrapper">
-          <div className="button-container">
-            <div className="button-hexagons">
-              <div className="hexagon" />
-              <div className="hexagon" />
-              <div className="hexagon" />
-              <div className="hexagon" />
-              <div className="hexagon" />
-              <div className="hexagon" />
+      <div className="nebula" />
+      <div className="grid-plane" />
+      <div className="stars-container">
+        <div className="star-layer" />
+        <div className="star-layer" />
+        <div className="star-layer" />
+      </div>
+      <div className="button-wrapper">
+        <div className="button-container">
+          <div className="button-hexagons">
+            <div className="hexagon" />
+            <div className="hexagon" />
+            <div className="hexagon" />
+            <div className="hexagon" />
+            <div className="hexagon" />
+            <div className="hexagon" />
+          </div>
+          <div className="digital-glyphs">
+            <div className="digital-glyph">0x89F2 EXEC PROTOCOL</div>
+            <div className="digital-glyph">SYS.QUANTUM.INIT()</div>
+            <div className="digital-glyph">
+              01011010 01000001 01010000 01010101 01010011 01001011
             </div>
-            <div className="digital-glyphs">
-              <div className="digital-glyph">0x89F2 EXEC PROTOCOL</div>
-              <div className="digital-glyph">SYS.QUANTUM.INIT()</div>
-              <div className="digital-glyph">
-                01011010 01000001 01010000 01010101 01010011 01001011
-              </div>
-              <div className="digital-glyph">HOLO-CONN INITIALIZED</div>
+            <div className="digital-glyph">HOLO-CONN INITIALIZED</div>
+          </div>
+          <button className="holo-button">
+            <div className="button-text">LAUNCH</div>
+            <div className="holo-glow" />
+            <div className="button-glitch" />
+            <div className="corner-accents">
+              <div className="corner-accent" />
+              <div className="corner-accent" />
+              <div className="corner-accent" />
+              <div className="corner-accent" />
             </div>
-            <button className="holo-button">
-              <div className="button-text">LAUNCH</div>
-              <div className="holo-glow" />
-              <div className="button-glitch" />
-              <div className="corner-accents">
-                <div className="corner-accent" />
-                <div className="corner-accent" />
-                <div className="corner-accent" />
-                <div className="corner-accent" />
-              </div>
-              <div className="holo-lines">
-                <div className="holo-line" />
-                <div className="holo-line" />
-                <div className="holo-line" />
-                <div className="holo-line" />
-              </div>
-              <div className="scan-line" />
-              <div className="holo-particles">
-                <div className="holo-particle" />
-                <div className="holo-particle" />
-                <div className="holo-particle" />
-                <div className="holo-particle" />
-                <div className="holo-particle" />
-                <div className="holo-particle" />
-              </div>
-            </button>
-            <div className="sound-wave">
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
-              <div className="wave-bar" />
+            <div className="holo-lines">
+              <div className="holo-line" />
+              <div className="holo-line" />
+              <div className="holo-line" />
+              <div className="holo-line" />
             </div>
+            <div className="scan-line" />
+            <div className="holo-particles">
+              <div className="holo-particle" />
+              <div className="holo-particle" />
+              <div className="holo-particle" />
+              <div className="holo-particle" />
+              <div className="holo-particle" />
+              <div className="holo-particle" />
+            </div>
+          </button>
+          <div className="sound-wave">
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
+            <div className="wave-bar" />
           </div>
         </div>
       </div>
@@ -179,6 +177,7 @@ const StyledWrapper = styled.div`
     filter: blur(30px);
     opacity: 1;
     animation: nebula-shift 30s infinite alternate ease-in-out;
+    z-index: -100;
   }
 
   @keyframes nebula-shift {
