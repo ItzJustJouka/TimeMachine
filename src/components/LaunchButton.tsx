@@ -1,6 +1,19 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const LaunchButton = () => {
+interface LaunchButtonProps {
+  destYear: number | null
+}
+
+const LaunchButton = (props: LaunchButtonProps) => {
+  const checkActive = () => props.destYear !== null && props.destYear > 999;
+
+  const [isActive, setIsActive] = useState(checkActive());
+
+  useEffect(() => {
+    setIsActive(checkActive());
+  }, [props.destYear])
+
   return (
     <StyledWrapper>
       <div className="nebula" />
@@ -28,7 +41,7 @@ const LaunchButton = () => {
             </div>
             <div className="digital-glyph">HOLO-CONN INITIALIZED</div>
           </div>
-          <button className="holo-button">
+          <button className={`holo-button ${isActive ? '' : 'inactive'}`} disabled={!props.destYear}>
             <div className="button-text">LAUNCH</div>
             <div className="holo-glow" />
             <div className="button-glitch" />
@@ -209,7 +222,8 @@ const StyledWrapper = styled.div`
     transform: perspective(500px) rotateX(60deg);
     transform-origin: center;
     animation: grid-move 20s linear infinite;
-    opacity: 0.6;
+    opacity: 0.8;
+    z-index: -100;
   }
 
   @keyframes grid-move {
@@ -251,6 +265,11 @@ const StyledWrapper = styled.div`
     outline: none;
     z-index: 5;
     border-radius: 2px;
+  }
+
+  .holo-button.inactive {
+    opacity: 0.6;
+    pointer-events: none;
   }
 
   .holo-button::before {

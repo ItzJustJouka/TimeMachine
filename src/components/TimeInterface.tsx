@@ -1,13 +1,30 @@
 import styled from "styled-components";
 
-const TimeInterface = () => {
+interface TimeInterfaceProps {
+  currentYear: number,
+  destYear: number | null
+  setCurrentYear: (year: number) => void,
+  setDestYear: (year: number | null) => void,
+}
+
+const TimeInterface = (props: TimeInterfaceProps) => {
+  function handleDestYearChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    if (!/^\d{0,4}$/.test(value)) {
+      return;
+    }
+
+    const year = value ? parseInt(value, 10) : null;
+    props.setDestYear(year);
+
+  }
   return (
     <StyledWrapper>
       <div className="time-interface">
         {/* Current Year Display */}
         <div className="year-display">
-          <div className="year-label">CURRENT YEAR</div>
-          <div className="year-value">2025</div>
+          <div className="year-label">ANNO CORRENTE</div>
+          <div className="year-value">{props.currentYear}</div>
           <div className="year-indicator">
             <div className="indicator-dot" />
             <div className="indicator-pulse" />
@@ -16,16 +33,18 @@ const TimeInterface = () => {
 
         {/* Target Year Input */}
         <div className="year-input">
-          <div className="input-label">TARGET YEAR</div>
+          <div className="input-label">INSERIRE DESTINAZIONE</div>
           <div className="input-container">
             <input 
-              type="number" 
+              type="text" 
               placeholder="YYYY" 
               className="year-field"
-              defaultValue=""
+              style={{fontWeight: "bold", fontSize: "2rem"}}
+              maxLength={4}
+              defaultValue={props.destYear ?? ''}
+              onChange={handleDestYearChange}
             />
-            <div className="input-scan-line" />
-            <div className="input-border" />
+            {/* <div className="input-scan-line" /> */}
           </div>
         </div>
       </div>
@@ -37,7 +56,7 @@ const StyledWrapper = styled.div`
   .time-interface {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 25px;
     margin-bottom: 20px;
     align-items: center;
   }
@@ -82,17 +101,17 @@ const StyledWrapper = styled.div`
   }
 
   .year-label, .input-label {
-    font-size: 12px;
+    font-size: 1rem;
     color: rgba(0, 221, 255, 0.8);
     letter-spacing: 2px;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     text-shadow: 0 0 5px rgba(0, 221, 255, 0.5);
     font-family: "Orbitron", monospace;
     text-align: center;
   }
 
   .year-value {
-    font-size: 32px;
+    font-size: 3rem;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 700;
     font-family: "Orbitron", monospace;
@@ -162,7 +181,7 @@ const StyledWrapper = styled.div`
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(0, 221, 255, 0.5);
     border-radius: 2px;
-    padding: 12px 15px;
+    padding: 12px 0;
     color: rgba(255, 255, 255, 0.9);
     font-size: 22px;
     font-family: "Orbitron", monospace;
@@ -215,27 +234,6 @@ const StyledWrapper = styled.div`
       opacity: 0;
       transform: translateX(100%) translateY(-1px);
     }
-  }
-
-  .input-border {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 1px solid transparent;
-    border-radius: 2px;
-    background: linear-gradient(
-      45deg,
-      rgba(0, 221, 255, 0.2),
-      rgba(255, 0, 222, 0.2)
-    ) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    opacity: 0;
-    animation: border-shimmer 5s infinite;
   }
 
   @keyframes border-shimmer {

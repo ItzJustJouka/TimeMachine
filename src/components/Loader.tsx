@@ -190,7 +190,7 @@ const StyledWrapper = styled.div`
     height: 100%;
     border-radius: 50%;
     border: 2px solid transparent;
-    opacity: 0.4;
+    opacity: 0.7;
     animation: platform-ring-pulse 4s infinite alternate;
   }
 
@@ -339,7 +339,7 @@ const StyledWrapper = styled.div`
     left: -10%;
     border-radius: 50%;
     border: none;
-    opacity: 0.5;
+    opacity: 0.8;
     transform-style: preserve-3d;
     animation: energy-rotation 10s infinite linear;
   }
@@ -683,7 +683,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0.3;
+    opacity: 0.5;
     background-image: linear-gradient(
         30deg,
         rgba(0, 221, 255, 0.5) 12%,

@@ -7,7 +7,7 @@ interface HotQuailProps {
 
 const HotQuail = forwardRef<HTMLDivElement, HotQuailProps>((props: HotQuailProps, ref) => {
   const aros = Array.from({ length: 15 }, (_, i) => { return (
-    <div key={i} style={{ animationDelay: `-${i * 0.1}s`, inset: `${i * 15}px` }} className="aro" />
+    <div key={i} style={{ animationDelay: `-${i * 0.07}s`, inset: `${i * 15}px` }} className="aro" />
   )});
 
   return (
@@ -32,17 +32,17 @@ const StyledWrapper = styled.div`
       inset: 0;
       box-shadow: inset 0 0 80px #ff08;
       clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-      animation: up_and_down 1.5s infinite ease-in-out both;
+      animation: up_and_down 1s infinite ease-in-out both;
     }
   }
 
   @keyframes up_and_down {
     0%,
     100% {
-      transform: translateZ(-100px) rotate(0deg);
+      transform: translateZ(-200px) rotate(0deg);
     }
     50% {
-      transform: translateZ(100px) rotate(90deg);
+      transform: translateZ(200px) rotate(90deg);
     }
   }`;
 

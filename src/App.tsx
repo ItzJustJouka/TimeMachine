@@ -11,6 +11,8 @@ import TimeInterface from './components/TimeInterface'
 function App() {
   const bar = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [destYear, setDestYear] = useState<number | null>(null);
   const quail = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -84,10 +86,10 @@ function App() {
           id="hot__quail"
           style={{
             position: 'absolute',
-            top: '50%',
+            top: '45%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            zIndex: 1,
+            zIndex: 10,
           }}
         >
           <HotQuail ref={quail} isVisible={isVisible} />
@@ -106,7 +108,7 @@ function App() {
         
         {/* Time Interface and Launch Button at bottom center */}
         <div style={{ margin: '40px 0', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'space-between', gap: '20px', height: "100%" }}>
-          <TimeInterface />
+          <TimeInterface currentYear={currentYear} destYear={destYear} setCurrentYear={setCurrentYear} setDestYear={setDestYear} />
           <LaunchButton />
         </div>
       </div>
