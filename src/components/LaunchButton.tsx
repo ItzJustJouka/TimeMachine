@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface LaunchButtonProps {
-  destYear: number | null
+  destYear: number | null,
+  currentYear: number
 }
 
 const LaunchButton = (props: LaunchButtonProps) => {
-  const checkActive = () => props.destYear !== null && props.destYear > 999;
+  const checkActive = () => props.destYear !== null && (props.destYear != props.currentYear) && props.destYear > 999;
 
   const [isActive, setIsActive] = useState(checkActive());
 
@@ -42,7 +43,7 @@ const LaunchButton = (props: LaunchButtonProps) => {
             <div className="digital-glyph">HOLO-CONN INITIALIZED</div>
           </div>
           <button className={`holo-button ${isActive ? '' : 'inactive'}`} disabled={!props.destYear}>
-            <div className="button-text">LAUNCH</div>
+            <div className="button-text">ESEGUIRE</div>
             <div className="holo-glow" />
             <div className="button-glitch" />
             <div className="corner-accents">

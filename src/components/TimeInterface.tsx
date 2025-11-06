@@ -5,6 +5,8 @@ interface TimeInterfaceProps {
   destYear: number | null
   setCurrentYear: (year: number) => void,
   setDestYear: (year: number | null) => void,
+  onTimeTravel: (currentYear: number, destYear: number) => void,
+  isTimeTraveling: boolean,
 }
 
 const TimeInterface = (props: TimeInterfaceProps) => {
@@ -16,17 +18,26 @@ const TimeInterface = (props: TimeInterfaceProps) => {
 
     const year = value ? parseInt(value, 10) : null;
     props.setDestYear(year);
+  }
 
+  function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter' && props.destYear !== null && !props.isTimeTraveling) {
+      props.onTimeTravel(props.currentYear, props.destYear);
+    }
   }
   return (
     <StyledWrapper>
       <div className="time-interface">
         {/* Current Year Display */}
         <div className="year-display">
-          <div className="year-label">ANNO CORRENTE</div>
-          <div className="year-value">{props.currentYear}</div>
+          <div className="year-label">
+            {props.isTimeTraveling ? "VIAGGIO NEL TEMPO..." : "ANNO CORRENTE"}
+          </div>
+          <div className={`year-value ${props.isTimeTraveling ? 'time-traveling' : ''}`}>
+            {props.currentYear}
+          </div>
           <div className="year-indicator">
-            <div className="indicator-dot" />
+            <div className={`indicator-dot ${props.isTimeTraveling ? 'active' : ''}`} />
             <div className="indicator-pulse" />
           </div>
         </div>
@@ -43,6 +54,8 @@ const TimeInterface = (props: TimeInterfaceProps) => {
               maxLength={4}
               defaultValue={props.destYear ?? ''}
               onChange={handleDestYearChange}
+              onKeyPress={handleKeyPress}
+              disabled={props.isTimeTraveling}
             />
             {/* <div className="input-scan-line" /> */}
           </div>
@@ -119,6 +132,22 @@ const StyledWrapper = styled.div`
     text-shadow: 0 0 10px rgba(0, 221, 255, 0.6);
     position: relative;
     z-index: 2;
+    transition: all 0.3s ease;
+  }
+
+  .year-value.time-traveling {
+    color: rgba(255, 255, 0, 0.9);
+    text-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+    animation: time-travel-glow 0.5s infinite alternate;
+  }
+
+  @keyframes time-travel-glow {
+    0% {
+      text-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+    }
+    100% {
+      text-shadow: 0 0 30px rgba(255, 255, 0, 1), 0 0 40px rgba(255, 165, 0, 0.6);
+    }
   }
 
   .year-indicator {
@@ -136,6 +165,23 @@ const StyledWrapper = styled.div`
     background: rgba(0, 221, 255, 0.8);
     box-shadow: 0 0 10px rgba(0, 221, 255, 0.6);
     animation: dot-pulse 2s infinite;
+  }
+
+  .indicator-dot.active {
+    background: rgba(255, 255, 0, 0.9);
+    box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+    animation: active-dot-pulse 0.3s infinite;
+  }
+
+  @keyframes active-dot-pulse {
+    0%, 100% {
+      opacity: 0.8;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.5);
+    }
   }
 
   .indicator-pulse {
@@ -200,6 +246,12 @@ const StyledWrapper = styled.div`
     border-color: rgba(0, 221, 255, 0.8);
     box-shadow: 0 0 15px rgba(0, 221, 255, 0.4);
     text-shadow: 0 0 8px rgba(0, 221, 255, 0.6);
+  }
+
+  .year-field:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: rgba(128, 128, 128, 0.3);
   }
 
   .year-field:focus + .input-scan-line {

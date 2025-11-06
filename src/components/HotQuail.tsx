@@ -11,7 +11,7 @@ const HotQuail = forwardRef<HTMLDivElement, HotQuailProps>((props: HotQuailProps
   )});
 
   return (
-    <StyledWrapper ref={ref} style={{display: props.isVisible ? "block" : "none"}}>
+    <StyledWrapper ref={ref} style={{opacity: props.isVisible ? 1 : 0}}>
       <aside className="hotQuail">
         {aros}
       </aside>
@@ -30,7 +30,7 @@ const StyledWrapper = styled.div`
     .aro {
       position: absolute;
       inset: 0;
-      box-shadow: inset 0 0 80px #ff08;
+      box-shadow: inset 0 0 100px rgba(255, 255, 0, 0.8);
       clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
       animation: up_and_down 1s infinite ease-in-out both;
     }

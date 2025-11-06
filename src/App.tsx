@@ -13,16 +13,86 @@ function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [destYear, setDestYear] = useState<number | null>(null);
+  const [isTimeTraveling, setIsTimeTraveling] = useState(false);
   const quail = useRef<HTMLDivElement | null>(null);
+  const timeTravelInterval = useRef<NodeJS.Timeout | null>(null);
+
+  // Function to validate if a year is reasonable
+  const isValidYear = (year: number): boolean => {
+    return year >= 1 && year <= 9999;
+  };
+
+  // Time travel function that gradually changes currentYear to destYear over 4 seconds
+  const executeTimeTravel = (currentYear: number, destYear: number) => {
+    if (!isValidYear(destYear) || (currentYear == destYear)) {
+      console.warn('Invalid destination year:', destYear);
+      return;
+    }
+
+    setIsVisible(true);
+
+    if (currentYear === destYear) {
+      return; // Already at destination
+    }
+
+    setIsTimeTraveling(true);
+    
+    // Clear any existing interval
+    if (timeTravelInterval.current) {
+      clearInterval(timeTravelInterval.current);
+    }
+
+    const duration = 4500; // 4 seconds in milliseconds
+    const yearDifference = Math.abs(destYear - currentYear);
+    const direction = destYear > currentYear ? 1 : -1;
+    
+    const startTime = Date.now();
+    let lastYear = currentYear;
+    
+    // Ease-in-out cubic function
+    const easeInOutCubic = (t: number, intensity: number = 0.7): number => {
+      const power = 3 * intensity; // Controls how "sharp" the curve is
+      return t < 0.5 
+        ? Math.pow(2, power - 1) * Math.pow(t, power)
+        : 1 - Math.pow(-2 * t + 2, power) / Math.pow(2, power - 1);
+    };
+    
+    timeTravelInterval.current = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1); // 0 to 1
+      
+      // Apply ease-in-out curve
+      const easedProgress = easeInOutCubic(progress);
+      
+      // Calculate target year based on eased progress
+      const targetYear = Math.round(currentYear + (yearDifference * easedProgress * direction));
+      
+      // Only update if the year has changed to avoid redundant state updates
+      if (targetYear !== lastYear) {
+        setCurrentYear(targetYear);
+        lastYear = targetYear;
+      }
+      
+      // Check if we've reached the destination or time is up
+      if (progress >= 1 || targetYear === destYear) {
+        setCurrentYear(destYear); // Ensure we end exactly at destination
+        setTimeout(() => {
+          clearInterval(timeTravelInterval.current!);
+          timeTravelInterval.current = null;
+          setIsTimeTraveling(false);
+          setIsVisible(false);
+        }, 500);
+      }
+    }, 16); // ~60fps for smooth animation
+  };
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.code === "KeyH") {
-        setIsVisible(v => !v);
+    // Cleanup interval on unmount
+    return () => {
+      if (timeTravelInterval.current) {
+        clearInterval(timeTravelInterval.current);
       }
     };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
   }, []);
 
   return (
@@ -89,7 +159,7 @@ function App() {
             top: '45%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            zIndex: 10,
+            zIndex: -1,
           }}
         >
           <HotQuail ref={quail} isVisible={isVisible} />
@@ -108,8 +178,15 @@ function App() {
         
         {/* Time Interface and Launch Button at bottom center */}
         <div style={{ margin: '40px 0', zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'space-between', gap: '20px', height: "100%" }}>
-          <TimeInterface currentYear={currentYear} destYear={destYear} setCurrentYear={setCurrentYear} setDestYear={setDestYear} />
-          <LaunchButton />
+          <TimeInterface 
+            currentYear={currentYear} 
+            destYear={destYear} 
+            setCurrentYear={setCurrentYear} 
+            setDestYear={setDestYear}
+            onTimeTravel={executeTimeTravel}
+            isTimeTraveling={isTimeTraveling}
+          />
+          <LaunchButton currentYear={currentYear} destYear={destYear} />
         </div>
       </div>
 
