@@ -1,4 +1,4 @@
-import { Key, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import Globe from './components/Globe'
 import { HackBar } from './components/Hackbar'
