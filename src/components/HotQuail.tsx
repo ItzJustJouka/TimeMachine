@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 interface HotQuailProps {
@@ -30,9 +30,9 @@ const StyledWrapper = styled.div`
     .aro {
       position: absolute;
       inset: 0;
-      box-shadow: inset 0 0 100px rgba(255, 255, 0, 0.8);
+      box-shadow: inset 0 0 100px rgba(238, 238, 108, 0.8);
       clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-      animation: up_and_down 1s infinite ease-in-out both;
+      animation: up_and_down 0.8s infinite ease-in-out both;
     }
   }
 

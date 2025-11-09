@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 interface LaunchButtonProps {
   destYear: number | null,
-  currentYear: number
+  currentYear: number,
+  isTraveling: boolean,
 }
 
 const LaunchButton = (props: LaunchButtonProps) => {
@@ -42,8 +43,13 @@ const LaunchButton = (props: LaunchButtonProps) => {
             </div>
             <div className="digital-glyph">HOLO-CONN INITIALIZED</div>
           </div>
-          <button className={`holo-button ${isActive ? '' : 'inactive'}`} disabled={!props.destYear}>
-            <div className="button-text">ESEGUIRE</div>
+          <button
+            className={`holo-button ${isActive ? '' : 'inactive'} ${props.isTraveling ? 'traveling' : ''}`}
+            disabled={!props.destYear}
+          >
+            <div className="button-text">
+              {props.isTraveling ? 'IN ESECUZIONE...' : 'ESEGUIRE'}
+            </div>
             <div className="holo-glow" />
             <div className="button-glitch" />
             <div className="corner-accents">
@@ -215,24 +221,24 @@ const StyledWrapper = styled.div`
     top: -50%;
     left: -50%;
     background-image: linear-gradient(
-        rgba(0, 162, 255, 0.15) 1px,
+        rgba(0, 162, 255, 0.35) 1px,
         transparent 1px
       ),
-      linear-gradient(90deg, rgba(0, 162, 255, 0.15) 1px, transparent 1px);
+      linear-gradient(90deg, rgba(0, 162, 255, 0.35) 1px, transparent 1px);
     background-size: 40px 40px;
     transform: perspective(500px) rotateX(60deg);
     transform-origin: center;
     animation: grid-move 20s linear infinite;
-    opacity: 0.8;
+    opacity: 1;
     z-index: -100;
   }
 
   @keyframes grid-move {
     0% {
-      transform: perspective(500px) rotateX(60deg) translateY(0);
+      transform: perspective(300px) rotateX(60deg) translateY(0);
     }
     100% {
-      transform: perspective(500px) rotateX(60deg) translateY(40px);
+      transform: perspective(300px) rotateX(60deg) translateY(40px);
     }
   }
 
@@ -266,6 +272,11 @@ const StyledWrapper = styled.div`
     outline: none;
     z-index: 5;
     border-radius: 2px;
+  }
+
+  .holo-button.is-traveling {
+    transform: translateZ(20px);
+    box-shadow: 0 0 20px 5px rgba(0, 221, 255, 0.5);
   }
 
   .holo-button.inactive {
@@ -760,45 +771,6 @@ const StyledWrapper = styled.div`
     border-top: none;
   }
 
-  .button-glitch {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    pointer-events: none;
-    z-index: 3;
-    opacity: 0;
-    animation: button-glitch 8s infinite;
-  }
-
-  @keyframes button-glitch {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    94%,
-    96% {
-      opacity: 0;
-    }
-    94.5% {
-      opacity: 0.8;
-      transform: translate(5px, -2px) skew(-5deg, 2deg);
-      background: rgba(255, 0, 222, 0.2);
-    }
-    95% {
-      opacity: 0.8;
-      transform: translate(-5px, 2px) skew(5deg, -2deg);
-      background: rgba(0, 221, 255, 0.2);
-    }
-    95.5% {
-      opacity: 0.8;
-      transform: translate(2px, 0) skew(-2deg, 0);
-      background: rgba(255, 255, 255, 0.2);
-    }
-  }
-
   /* Звуковые волны */
   .sound-wave {
     position: absolute;
@@ -926,6 +898,47 @@ const StyledWrapper = styled.div`
     transform-style: preserve-3d;
     text-transform: uppercase;
   }
+
+  .holo-button.traveling {
+  color: #ff4d4d;
+  text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.5) inset, 0 0 20px rgba(255, 0, 0, 0.4);
+  animation: traveling-flicker 1.2s infinite alternate;
+}
+
+.holo-button.traveling .holo-glow {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 0, 0, 0.3) 0%,
+    rgba(80, 0, 0, 0.2) 40%,
+    rgba(243, 5, 5, 0) 70%
+  );
+  filter: blur(15px);
+  animation: traveling-glow 0.8s infinite alternate;
+}
+
+@keyframes traveling-glow {
+  0% {
+    opacity: 0.6;
+    filter: blur(12px) brightness(1);
+  }
+  100% {
+    opacity: 0.9;
+    filter: blur(18px) brightness(1.5);
+  }
+}
+
+@keyframes traveling-flicker {
+  0%, 100% {
+    transform: scale(1.02);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    transform: scale(0.98);
+    filter: hue-rotate(15deg);
+  }
+}
+
 `;
 
 export default LaunchButton;

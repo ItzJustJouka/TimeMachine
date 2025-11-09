@@ -53,6 +53,7 @@ const TimeInterface = (props: TimeInterfaceProps) => {
               style={{fontWeight: "bold", fontSize: "2rem"}}
               maxLength={4}
               defaultValue={props.destYear ?? ''}
+              value={props.destYear ?? ''}
               onChange={handleDestYearChange}
               onKeyPress={handleKeyPress}
               disabled={props.isTimeTraveling}
@@ -70,7 +71,6 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 25px;
-    margin-bottom: 20px;
     align-items: center;
   }
 
@@ -81,7 +81,7 @@ const StyledWrapper = styled.div`
     border-radius: 4px;
     padding: 20px 30px;
     min-width: 250px;
-    width: 300px;
+    width: 50%;
     backdrop-filter: blur(10px);
     overflow: hidden;
   }
@@ -114,7 +114,7 @@ const StyledWrapper = styled.div`
   }
 
   .year-label, .input-label {
-    font-size: 1rem;
+    font-size: 1.25rem;
     color: rgba(0, 221, 255, 0.8);
     letter-spacing: 2px;
     margin-bottom: 16px;
@@ -124,7 +124,7 @@ const StyledWrapper = styled.div`
   }
 
   .year-value {
-    font-size: 3rem;
+    font-size: 4rem;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 700;
     font-family: "Orbitron", monospace;
@@ -229,7 +229,7 @@ const StyledWrapper = styled.div`
     border-radius: 2px;
     padding: 12px 0;
     color: rgba(255, 255, 255, 0.9);
-    font-size: 22px;
+    font-size: 3rem;
     font-family: "Orbitron", monospace;
     text-align: center;
     outline: none;

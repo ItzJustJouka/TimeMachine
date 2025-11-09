@@ -126,7 +126,7 @@ const StyledWrapper = styled.div`
   .star-layer:nth-child(3) {
     transform: translateZ(-200px);
     animation: star-drift 250s linear infinite;
-    opacity: 0.4;
+    opacity: 0.8;
   }
 
   @keyframes star-drift {
@@ -220,11 +220,11 @@ const StyledWrapper = styled.div`
   @keyframes platform-ring-pulse {
     0% {
       transform: scale(1);
-      opacity: 0.2;
+      opacity: 0.4;
     }
     100% {
       transform: scale(1.05);
-      opacity: 0.6;
+      opacity: 0.8;
     }
   }
 
@@ -384,10 +384,10 @@ const StyledWrapper = styled.div`
 
   @keyframes energy-pulse {
     0% {
-      opacity: 0.3;
+      opacity: 0.4;
     }
     100% {
-      opacity: 0.7;
+      opacity: 0.9;
     }
   }
 
@@ -683,7 +683,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0.5;
+    opacity: 0.9;
     background-image: linear-gradient(
         30deg,
         rgba(0, 221, 255, 0.5) 12%,
@@ -749,121 +749,13 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .lightning {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    filter: blur(1px);
-    transform-style: preserve-3d;
-    opacity: 0;
-    animation: lightning 5s infinite;
-    z-index: 11;
-  }
-
-  @keyframes lightning {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    98% {
-      opacity: 0;
-    }
-    99% {
-      opacity: 0.8;
-      filter: brightness(3);
-    }
-  }
-
-  .lightning::before,
-  .lightning::after {
-    content: "";
-    position: absolute;
-    background: white;
-    filter: blur(1px);
-    box-shadow: 0 0 10px #00ddff, 0 0 20px rgba(255, 255, 255, 0.8);
-  }
-
-  .lightning::before {
-    width: 3px;
-    height: 100%;
-    left: 50%;
-    transform: translateX(-50%) rotateY(90deg);
-    background: linear-gradient(
-      180deg,
-      rgba(0, 255, 255, 0) 0%,
-      rgba(0, 255, 255, 1) 40%,
-      white 50%,
-      rgba(255, 0, 255, 1) 60%,
-      rgba(255, 0, 255, 0) 100%
-    );
-  }
-
-  .lightning::after {
-    width: 100%;
-    height: 3px;
-    top: 50%;
-    transform: translateY(-50%) rotateX(90deg);
-    background: linear-gradient(
-      90deg,
-      rgba(0, 255, 255, 0) 0%,
-      rgba(0, 255, 255, 1) 40%,
-      white 50%,
-      rgba(255, 0, 255, 1) 60%,
-      rgba(255, 0, 255, 0) 100%
-    );
-  }
-
-  .glitch-effect {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    animation: glitch 7s infinite;
-    pointer-events: none;
-    z-index: 12;
-    background: linear-gradient(
-      45deg,
-      rgba(255, 0, 222, 0.3) 0%,
-      transparent 20%,
-      rgba(0, 221, 255, 0.3) 40%,
-      transparent 60%,
-      rgba(255, 0, 222, 0.3) 80%,
-      transparent 100%
-    );
-  }
-
-  @keyframes glitch {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    94%,
-    96% {
-      opacity: 0;
-    }
-    94.5% {
-      opacity: 0.8;
-      transform: translate(5px, -5px) skew(-5deg, 5deg);
-    }
-    95% {
-      opacity: 0.8;
-      transform: translate(-5px, 5px) skew(5deg, -5deg);
-    }
-    95.5% {
-      opacity: 0.8;
-      transform: translate(5px, 0) skew(-5deg, 0);
-    }
-  }
-
   .data-circle {
     position: absolute;
     width: 200px;
     height: 200px;
     border-radius: 50%;
     border: 1px solid rgba(0, 221, 255, 0.2);
-    opacity: 0.7;
+    opacity: 0.9;
     transform-style: preserve-3d;
   }
 
@@ -997,38 +889,6 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .loading-text {
-    position: absolute;
-    bottom: -85px;
-    text-align: center;
-    font-size: 14px;
-    letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 10px rgba(0, 221, 255, 0.6);
-    animation: text-flicker 2s infinite;
-  }
-
-  @keyframes text-flicker {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    8%,
-    10% {
-      opacity: 0.6;
-    }
-    9% {
-      opacity: 0.9;
-    }
-    52%,
-    54% {
-      opacity: 0.6;
-    }
-    53% {
-      opacity: 0.9;
-    }
-  }
-
   .progress-container {
     position: absolute;
     bottom: -110px;
@@ -1129,70 +989,6 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .projection-beams {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    bottom: -80px;
-    transform-style: preserve-3d;
-    opacity: 0.3;
-    pointer-events: none;
-  }
-
-  .beam {
-    position: absolute;
-    width: 1px;
-    height: 250px;
-    background: linear-gradient(
-      0deg,
-      rgba(0, 221, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0.4) 40%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    bottom: 0;
-    transform-origin: bottom;
-    filter: blur(1px);
-    opacity: 0.7;
-  }
-
-  .beam:nth-child(1) {
-    left: 30%;
-    transform: rotateY(10deg) rotateX(-30deg);
-    animation: beam-flicker 4s infinite alternate;
-    animation-delay: 0.5s;
-  }
-
-  .beam:nth-child(2) {
-    left: 45%;
-    transform: rotateY(-5deg) rotateX(-25deg);
-    animation: beam-flicker 3s infinite alternate;
-    animation-delay: 1.5s;
-  }
-
-  .beam:nth-child(3) {
-    left: 55%;
-    transform: rotateY(5deg) rotateX(-25deg);
-    animation: beam-flicker 4s infinite alternate;
-    animation-delay: 0.7s;
-  }
-
-  .beam:nth-child(4) {
-    left: 70%;
-    transform: rotateY(-10deg) rotateX(-30deg);
-    animation: beam-flicker 3.5s infinite alternate;
-    animation-delay: 2s;
-  }
-
-  @keyframes beam-flicker {
-    0%,
-    100% {
-      opacity: 0.3;
-    }
-    50% {
-      opacity: 0.7;
-    }
-  }
-
   .holo-ui {
     position: absolute;
     top: -150px;
@@ -1200,7 +996,7 @@ const StyledWrapper = styled.div`
     width: 200px;
     height: 300px;
     transform: rotateY(30deg);
-    opacity: 0.7;
+    opacity: 0.9;
     pointer-events: none;
   }
 
@@ -1363,7 +1159,7 @@ const StyledWrapper = styled.div`
     position: absolute;
     border-radius: 50%;
     border: 1px dashed rgba(0, 221, 255, 0.5);
-    opacity: 0.3;
+    opacity: 0.8;
     animation: radial-pulse 4s infinite alternate;
   }
 
