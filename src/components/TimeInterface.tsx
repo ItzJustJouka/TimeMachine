@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 interface TimeInterfaceProps {
@@ -10,6 +11,23 @@ interface TimeInterfaceProps {
 }
 
 const TimeInterface = (props: TimeInterfaceProps) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    const focusInput = (e: KeyboardEvent) => {
+      console.log(e.key);
+      if (e.key === 'q') {
+        if(inputRef.current) {
+          inputRef.current.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', focusInput);
+    return () => {
+      document.removeEventListener('keydown', focusInput);
+    };
+  }, []);
   function handleDestYearChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     if (!/^\d{0,4}$/.test(value)) {
@@ -47,6 +65,7 @@ const TimeInterface = (props: TimeInterfaceProps) => {
           <div className="input-label">INSERIRE DESTINAZIONE</div>
           <div className="input-container">
             <input 
+              ref={inputRef}
               type="text" 
               placeholder="YYYY" 
               className="year-field"
