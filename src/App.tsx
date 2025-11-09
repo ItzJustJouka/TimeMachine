@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Key, useEffect, useRef, useState } from 'react'
 import './App.css'
 import Globe from './components/Globe'
 import { HackBar } from './components/Hackbar'
@@ -20,32 +20,50 @@ function App() {
 
   const [isFading, setIsFading] = useState(false);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const timeTravelAudio = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio(timeSfx);
-    audioRef.current.preload = 'auto';
+    timeTravelAudio.current = new Audio(timeSfx);
+    timeTravelAudio.current.preload = 'auto';
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = '';
-        audioRef.current = null;
+      if (timeTravelAudio.current) {
+        timeTravelAudio.current.pause();
+        timeTravelAudio.current.src = '';
+        timeTravelAudio.current = null;
       }
     };
   }, []);
 
+
+
+  useEffect(() => {
+    const setFullScreen = (e: KeyboardEvent) => {
+      if (e.key === 'f') {
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        } else {
+          document.documentElement.requestFullscreen();
+        }
+      }
+    };
+    document.addEventListener('keydown', setFullScreen);
+    return () => {
+      document.removeEventListener('keydown', setFullScreen);
+    }
+  })
+
   const playTimeSfx = async () => {
-  if (!audioRef.current) return;
-  try {
-    // reset if it was playing
-    audioRef.current.pause();
-    audioRef.current.currentTime = 0;
-    await audioRef.current.play(); // returns a promise
-  } catch (err) {
-    // Ignore NotAllowedError if user hasn't interacted yet
-    console.warn('Audio play blocked or failed:', err);
-  }
-};
+    if (!timeTravelAudio.current) return;
+    try {
+      // reset if it was playing
+      timeTravelAudio.current.pause();
+      timeTravelAudio.current.currentTime = 0;
+      await timeTravelAudio.current.play(); // returns a promise
+    } catch (err) {
+      // Ignore NotAllowedError if user hasn't interacted yet
+      console.warn('Audio play blocked or failed:', err);
+    }
+  };
 
 
   // Function to validate if a year is reasonable

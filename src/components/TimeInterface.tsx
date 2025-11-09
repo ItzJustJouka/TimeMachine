@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
+import beep from '../assets/beep.mp3';
 
 interface TimeInterfaceProps {
   currentYear: number,
@@ -11,11 +12,36 @@ interface TimeInterfaceProps {
 }
 
 const TimeInterface = (props: TimeInterfaceProps) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
+    audioRef.current = new Audio(beep);
+    audioRef.current.preload = 'auto';
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = '';
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  const playBeepSfx = async () => {
+    if (!audioRef.current) return;
+    try {
+      // reset if it was playing
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      await audioRef.current.play(); // returns a promise
+    } catch (err) {
+      // Ignore NotAllowedError if user hasn't interacted yet
+      console.warn('Audio play blocked or failed:', err);
+    }
+  };
+
+  useEffect(() => {
     const focusInput = (e: KeyboardEvent) => {
-      console.log(e.key);
       if (e.key === 'q') {
         if(inputRef.current) {
           inputRef.current.focus();
@@ -33,6 +59,7 @@ const TimeInterface = (props: TimeInterfaceProps) => {
     if (!/^\d{0,4}$/.test(value)) {
       return;
     }
+    playBeepSfx();
 
     const year = value ? parseInt(value, 10) : null;
     props.setDestYear(year);
@@ -43,6 +70,7 @@ const TimeInterface = (props: TimeInterfaceProps) => {
       props.onTimeTravel(props.currentYear, props.destYear);
     }
   }
+
   return (
     <StyledWrapper>
       <div className="time-interface">
